@@ -1,3 +1,3 @@
 <?php 
 //	phpinfo();
-echo "It's awwwwwright.";
+var_dump($_REQUEST);
