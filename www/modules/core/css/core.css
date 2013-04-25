@@ -1,0 +1,12 @@
+html,body,div,span,table,td {
+    table-layout: fixed;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+    vertical-align: top;
+    border:0px;
+    font-family:'Tahoma',sans-serif;
+    font-size:10px;
+    background:black;
+    color:white;
+}

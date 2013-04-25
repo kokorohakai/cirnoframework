@@ -1,3 +1,3 @@
 <?php 
-//	phpinfo();
-var_dump($_REQUEST);
+require_once("../www-application/application.php");
+$app = new App( $_REQUEST, $_SERVER['REQUEST_METHOD'] );
