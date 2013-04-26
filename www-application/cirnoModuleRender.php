@@ -7,17 +7,45 @@ class cirnoModuleRender{
     /********************
     * Private Methods
     ********************/
-    private function loadCoreModule(){
-        require_once("../www/modules/core/core.php");
-        $core = new coreModule( $this->app );
-        $this->modules["core"] = $core;
+    private function render( $url ){
+        $this->components['js'] = array_unique($this->components['js']);
+        $this->components['css'] = array_unique($this->components['css']);
+        $this->components['footjs'] = array_unique($this->components['footjs']);
+        $nl = "\n";
+        $body =  
+            "<!DOCTYPE html>".$nl.
+            '<HTML LANG="en">'.$nl.
+                "<HEAD>".$nl.
+                    '<META charset="utf-8"/>'.$nl.
+                    "<TITLE>".$this->components['title']."</TITLE>".$nl;
+        foreach ($this->components['css'] as $i){
+            $body.='<LINK rel="stylesheet" href="'.$i.'"/>'.$nl;
+        }
+        foreach ($this->components['js'] as $i){
+            $body.='<SCRIPT src="'.$i.'"></SCRIPT>'.$nl;
+        }
+        $body.=     '<SCRIPT>'.$nl.
+                        'cirno.module = "'.$url.'"'.$nl.
+                    '</SCRIPT>';
+        $body .=
+                "</HEAD>".$nl.
+                "<BODY>".$nl.
+                '<DIV id="cirno">If you are seeing this, something went horribly wrong on the front end application.</DIV>'.$nl;
+        foreach ($this->components['footjs'] as $i){
+            $body.='<SCRIPT src="'.$i.'"></SCRIPT>'.$nl;
+        }
+        $body .=
+                "</BODY>".$nl;
+            "</HTML>".$nl;
+        echo $body;
     }
+
     private function loadModule( $module ){
         if ($module['exists']) {
             require_once("../www".$module['path']."/".$module['name'].".php");
             $mname = $module['name']."Module";
             if (class_exists($mname)) {
-                $moduleClass = new $mname( $this->app );
+                $moduleClass = new $mname( $this, $module );
             } else {
                 echo "ERROR: Malformed class defined '".$module['name']."' @ ".$module['path'];
                 exit(0);
@@ -36,19 +64,18 @@ class cirnoModuleRender{
             }
         }
     }
+
     private function loadModules($url){
         $this->loadModule( $this->buildModule("core") );
         if ( $this->module['exists'] ){
             $this->loadModule( $this->module );
         } else {
+            $url = $this->defaultModule["url"];
             $this->loadModule( $this->defaultModule );
         }
 
-        echo "<pre>";
-        var_dump($this->modules);
-        echo "</pre>";
-        //if all is good in the above print out, then we are good to begin rendering.
-
+        error_log($url);
+        $this->render($url);
     }
 
     private function buildModule( $url ){
@@ -56,7 +83,7 @@ class cirnoModuleRender{
             "obj" => "",
             "path" => "",
             "name" => "",
-            "url" => $url,
+            "url" => str_replace("..",".",$url),
             "exists" => false
         );
 
@@ -73,6 +100,13 @@ class cirnoModuleRender{
     /********************
     * Public Variables
     ********************/
+    public $app;
+    public $components = array(
+        "title"=>"",
+        "footjs"=>array(),
+        "js"=>array(),
+        "css"=>array()
+    );
 	public $module = array();
     public $defaultModule = array(
         "obj"=>array("home"),
@@ -84,11 +118,11 @@ class cirnoModuleRender{
     /********************
     * Public Methods
     ********************/
-    public function __construct( $app ){
-    	$this->app = $app;
+    public function __construct( &$app ){
+        $this->app = $app;
     	$this->request = $app->request;
     	$this->verb = $app->verb;
     	$this->module = $app->module;
-    	$this->loadModules();
+    	$this->loadModules($this->module['url']);
     }
 }

@@ -15,7 +15,7 @@ class CirnoModuleRetrieval{
     /********************
     * Public Methods
     ********************/
-    public function __construct( $app ){
+    public function __construct( &$app ){
     	$this->app = $app;
     	$this->request = $app->request;
     	$this->verb = $app->verb;

@@ -43,12 +43,12 @@ class CirnoApplication{
             $request = $inRequest;
 
             if (isset($request['url'])){
-                $module = $this->buildModule($request['url']);
+                $module = $this->buildModule(str_replace("..",".",$request['url']));
                 unset($request['url']);
             }
         }
         if (isset($inVerb)){
-            $verb = $inVerb;
+            $verb = str_replace("..",".",stripslashes($inVerb));
         }
 
         $this->module = $module;
