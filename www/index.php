@@ -1,3 +1,3 @@
 <?php 
-require_once("../www-application/application.php");
-$app = new App( $_REQUEST, $_SERVER['REQUEST_METHOD'] );
+require_once("../www-application/cirnoApplication.php");
+$cirno = new CirnoApplication( $_REQUEST, $_SERVER['REQUEST_METHOD'] );

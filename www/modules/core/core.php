@@ -7,6 +7,7 @@ class coreModule extends Module{
         "core.css"
     );
     public $depends = array(
+        "core/login"
     );
     public function __construct(){
         parent::__construct();

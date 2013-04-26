@@ -1,13 +1,12 @@
 <?php
-class homeModule extends Module{
+class loginModule extends Module{
     public $js = array(
-        "home.js"
+        "login.js"
     );
     public $css = array(
-        "home.css"
+        "login.css"
     );
-    public $depends = array(
-        
+    public $depends = array(        
     );
     public function __construct( $app ){
         parent::__construct();
