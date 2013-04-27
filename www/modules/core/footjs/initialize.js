@@ -1,3 +1,3 @@
-Cirno = new cirno(cirno.module);
+cirno = new CirnoApp(cirno.module);
 
-Cirno.renderInto(document.getElementById("cirno"));
+cirno.renderInto(document.getElementById("cirno"));

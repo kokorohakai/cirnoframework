@@ -25,7 +25,7 @@ class cirnoModuleRender{
             $body.='<SCRIPT src="'.$i.'"></SCRIPT>'.$nl;
         }
         $body.=     '<SCRIPT>'.$nl.
-                        'cirno.module = "'.$url.'"'.$nl.
+                        'CirnoApp.module = "'.$url.'"'.$nl.
                     '</SCRIPT>';
         $body .=
                 "</HEAD>".$nl.

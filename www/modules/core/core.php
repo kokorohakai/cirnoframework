@@ -2,6 +2,8 @@
 class coreModule extends Module{
     public $js = array(
         "enyo.js",
+        "socket.io.min.js",
+        "messaging.js",
         "core.js"
     );
     public $footjs = array(

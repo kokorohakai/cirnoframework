@@ -24,12 +24,15 @@ class CirnoAPI{
                 if (method_exists($AC,"render")){
                     $output = $AC->render($this->request);
                 } else {
+                    http_response_code(404);
                     $output['error']="File for controller: ".$path." ".$this->verb." exists, but class ApiController does not have a render method!";
                 }
             } else {
+                http_response_code(404);
                 $output['error']="File for controller: ".$path." ".$this->verb." exists, but does not contain class ApiController!";
             }
         } else {
+            http_response_code(404);
             $output['error']="Could not find controller for: ".$path." ".$this->verb;
         }
 
