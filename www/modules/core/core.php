@@ -1,23 +1,27 @@
 <?php
-class coreModule extends Module{
+class CoreModule extends Module{
     public $js = array(
         "enyo.js",
+        "utils.js",
         "socket.io.min.js",
         "messaging.js",
-        "core.js"
+        "loginmanager.js",
+        "core.js",
+        "sha3.js",
+        "widgets/package.js",
+        "/modules/core/css/core.css.js"
     );
     public $footjs = array(
         "initialize.js"
     );
     public $css = array(
-        "enyo.css",
-        "core.css"
+        "enyo.css"
     );
     public $depends = array(
-        "core/login"
+        
     );
-    public function __construct( &$renderer, &$meta ){
-        parent::__construct(func_get_args());
 
+    public function __construct( &$renderer, &$meta ){
+        parent::__construct(func_get_args()); 
     }
 }

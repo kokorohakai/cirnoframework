@@ -1,8 +1,17 @@
 var test="javascript scope is fucked.";
 //define your messages here!
+var self = this;
 this.messages = {
-	test: function( str ){
-		console.log("test received",str, test);;
-		messageHandler.emitAll("test",str);
-	}
+    "/home":{
+    	test: function( data, socket ){
+    		console.log("test received", data, test);;
+
+            self.cirno.io.sockets.emit( "test", data );
+    	}
+    },
+    "/login":{
+        login: function( data, socket ){
+            console.log("Socket is trying to log into service");
+        }
+    }
 }

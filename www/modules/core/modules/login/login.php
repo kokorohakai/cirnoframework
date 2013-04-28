@@ -1,5 +1,5 @@
 <?php
-class loginModule extends Module{
+class coreLoginModule extends Module{
     public $js = array(
         "login.js"
     );

@@ -1,10 +1,15 @@
 <?php
+require_once("cirnoAppBase.php");
+require_once("controller.php");
+require_once("module.php");
+require_once("model.php");
+require_once("user.php");
+//the app
 require_once("cirnoAPI.php");
 require_once("cirnoModuleRender.php");
 require_once("cirnoModuleRetrieval.php");
-require_once("module.php");
 
-class CirnoApplication{
+class CirnoApplication extends CirnoPartialAppBase{
     /********************
     * Private Variables
     ********************/
@@ -15,25 +20,6 @@ class CirnoApplication{
     * Private Methods
     ********************/
     //general module detected methods.
-    private function buildModule( $url ){
-        $module = array(
-            "obj" => "",
-            "path" => "",
-            "name" => "",
-            "url" => $url,
-            "exists" => false
-        );
-
-        $module['obj'] = split("/", $url );
-
-        foreach ($module['obj'] as $i){
-            $module['name'] = $i;
-            $module['path'] .= "/modules/".$i;
-        }
-        $module['exists'] = file_exists("../www".$module['path']."/".$module['name'].".php");
-        return $module;
-    }
-
     private function prepareApplication( $inRequest, $inVerb ){
         $module = $this->defaultModule;
         $request = array();

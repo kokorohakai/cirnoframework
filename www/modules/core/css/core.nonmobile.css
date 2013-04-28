@@ -1,0 +1,89 @@
+html,body,div,span,table,td,img {
+    table-layout: fixed;
+    margin: 0px;
+    padding: 0px;
+    border-collapse: collapse;
+    vertical-align: top;
+    border:0px;
+    font-family:'Tahoma',sans-serif;
+    font-size:14px;
+    color:white;
+}
+
+html,body{
+    background:black;
+}
+/* Both Layouts */
+input, textarea, select, button, span.button{
+    border-left:2px solid #66A;
+    border-top:2px solid #66A;
+    border-bottom:2px solid #88A;
+    border-right:2px solid #88A;
+    background:#EEF;
+    color: #006;   
+    font-size:12px;
+    border-radius:5px;
+    padding:2px;
+}
+
+span.button{
+    background-image:url('http://cirno/modules/core/js/onyx/images/gradient.png');
+    background-color:#EEF;
+    cursor:pointer;
+    line-height:30px;
+    border-radius:7px;
+    padding: 3px;    
+    font-weight:bold;
+}
+
+span.button:hover{
+    background-color:#FFF;
+}
+
+#cirnoApp{
+    text-align:center;
+}
+
+td{
+    text-align:left;
+}
+td.grouping{
+    text-align:right;
+    border-bottom:1px solid #ABE;
+}
+td.topGrouping{
+    text-align:left;
+    border-bottom:1px solid #ABE;
+}
+div.group{
+    border:1px solid #ABE;
+    border-radius:10px;
+    padding:5px;
+    background:#111;
+    display:inline-block;   
+}
+
+div.onyx-toolbar-inline{
+    padding:0px;
+    font-weight:bold;
+    height:30px;
+    border-bottom: 2px solid #678;
+}
+
+div.onyx-toolbar-inline div {
+    float:left;
+}
+div.toolbarLink {
+    padding-right:7px;
+    padding-left:7px;
+    border-right: 1px solid #ABE;
+    cursor:pointer;
+}
+
+div.toolbarLink:hover{
+    color:#DDF;
+}
+
+.cirnoToolbar {
+    margin-bottom:20px;
+}

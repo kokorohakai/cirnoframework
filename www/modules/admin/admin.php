@@ -15,4 +15,7 @@ class adminModule extends Module{
         parent::__construct(func_get_args());
 
     }
+    public $permissions = array(
+        "admin"
+    );
 }

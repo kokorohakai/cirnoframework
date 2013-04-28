@@ -1,6 +1,9 @@
 <?php
-class homeModule extends Module{
+class HomeModule extends Module{
     public $js = array(
+        "/modules/core/js/layout/fittable/package.js",
+        "/modules/core/js/onyx/package.js",
+        "/modules/core/js/onyxWidgets/package.js",
         "home.js"
     );
     public $footjs = array(
@@ -11,6 +14,9 @@ class homeModule extends Module{
     );
     public $depends = array(
         
+    );
+
+    public $permissions = array(
     );
 
     public $title = "⑨ Karaoke Machine: The Strongest Karaoke Machine.";
