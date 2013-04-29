@@ -1,4 +1,7 @@
 enyo.depends(
     "form",
-    "link.js"
+    "link.js",
+    "toolbar",
+    "loginmanager.js",
+    "messaging.js"
 );

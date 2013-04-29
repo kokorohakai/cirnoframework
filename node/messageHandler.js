@@ -1,4 +1,3 @@
-var test="javascript scope is fucked.";
 //define your messages here!
 var self = this;
 this.messages = {
@@ -12,6 +11,11 @@ this.messages = {
     "/login":{
         login: function( data, socket ){
             console.log("Socket is trying to log into service");
+        }
+    },
+    "/admin":{
+        test: function( data, socket ){
+
         }
     }
 }

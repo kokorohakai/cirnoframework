@@ -25,6 +25,11 @@ class CirnoModuleRetrieval extends CirnoAppBase{
                 $output = array("error"=>"Invalid module name supplied");
             }
         }
+
+        if ( !$this->user->hasPermissions( $this->components['permissions'] ) ){
+            http_response_code(403);
+            $output = array('error'=>"User does not have permission to access this module.");
+        }
         echo json_encode($output);
         exit(0);
     }

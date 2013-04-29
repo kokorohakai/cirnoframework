@@ -73,14 +73,14 @@ div.onyx-toolbar-inline{
 div.onyx-toolbar-inline div {
     float:left;
 }
-div.toolbarLink {
+div.cirnoLink {
     padding-right:7px;
     padding-left:7px;
     border-right: 1px solid #ABE;
     cursor:pointer;
 }
 
-div.toolbarLink:hover{
+div.cirnoLink:hover{
     color:#DDF;
 }
 

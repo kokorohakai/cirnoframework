@@ -1,15 +1,17 @@
 <?php
 class CoreModule extends Module{
     public $js = array(
-        "enyo.js",
-        "utils.js",
-        "socket.io.min.js",
-        "messaging.js",
-        "loginmanager.js",
-        "core.js",
+        //libraries
         "sha3.js",
+        "socket.io.min.js",
+        //enyo libraries
+        "enyo.js",
+        "layout/fittable/package.js",
+        "onyx/package.js",
+        //core app
+        "/modules/core/css/core.css.js",
         "widgets/package.js",
-        "/modules/core/css/core.css.js"
+        "core.js"
     );
     public $footjs = array(
         "initialize.js"

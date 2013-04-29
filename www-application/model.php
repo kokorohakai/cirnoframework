@@ -47,10 +47,9 @@ class Model{
     *	$joins: an array of fields and they matching table/field. 
     *			The array should look like this:
     *			
-    *			$joins = array( "permission_id" => array( "table" => "permissions", "field" => "id" ) );
+    *			$joins = array( "permission_id" => array( "permission" => "id" ) );
     *				-or-
-    *			$joins = ["permissions_id"] | ["table"] = "permissions";
-    *										| ["field"] = "id";
+    *			$joins = ["field_name"] | ["table_name"] = "field_name"
     *
     ********************************************************************************************************/
     public function __construct($table, $pkey='id', $joins=[] ){
@@ -58,8 +57,8 @@ class Model{
 
     	$joinStr = "";
     	foreach( $joins as $field=>$join ) {
-    		if ( isset($join['table']) && isset($join['field']) ){
-    			$joinStr.="LEFT JOIN `".$join['table']."` ON `".$field."` = `".$join['table']."`.`".$join['field']."` ";
+            foreach ($join as $target=>$target_field ) {
+    		    $joinStr.="LEFT JOIN `".$target."` ON `".$field."` = `".$target."`.`".$target_field."` ";
     		}
     	}
 
@@ -120,7 +119,7 @@ class Model{
     ********************************************************************************************************/
     public function update( $id, $values ) {
     	$id = str_replace("'","''",$id);
-    	$valuesStr = "";
+    	$valueStr = "";
     	foreach ( $values as $key=>$value ) {
     		$valueStr.="`".$key."` = '".str_replace("'","''",$value)."', ";
     	}
@@ -134,7 +133,7 @@ class Model{
     *
     ********************************************************************************************************/
     public function insert( $values ){
-    	$valuesStr = "";
+    	$valueStr = "";
     	foreach ( $values as $key=>$value ) {
     		$valueStr.="`".$key."` = '".str_replace("'","''",$value)."', ";
     	}

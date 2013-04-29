@@ -6,10 +6,26 @@ class cirnoModuleRender extends CirnoAppBase{
     /********************
     * Private Methods
     ********************/
+    private function render404( ){
+        echo '<SCRIPT>window.location="/home";</SCRIPT>';
+        exit(0);
+    }
+
     private function render( $url ){
         $this->components['js'] = array_unique($this->components['js']);
         $this->components['css'] = array_unique($this->components['css']);
         $this->components['footjs'] = array_unique($this->components['footjs']);
+
+        $_SESSION['module'] = $this->components;
+        $_SESSION['module']['path']=$url;
+
+        //write the session for node.js to access.
+        $sessionData = json_encode($_SESSION);
+        $fname = "/var/php_session/sess_".session_id()."_js";
+        $fh = fopen($fname,'w');
+        fwrite($fh,$sessionData,strlen($sessionData));
+
+        $sessionData;
         $nl = "\n";
         $body =  
             "<!DOCTYPE html>".$nl.
@@ -17,17 +33,15 @@ class cirnoModuleRender extends CirnoAppBase{
                 "<HEAD>".$nl.
                     '<META name="viewport" content="user-scalable=0"/>'.
                     '<META charset="utf-8"/>'.$nl.
-                    "<TITLE>".$this->components['title']."</TITLE>".$nl;
+                    "<TITLE>".$this->components['title']."</TITLE>".$nl.
+                    '<SCRIPT src="/modules/core/js/system.js"></SCRIPT>'.$nl.
+                    '<SCRIPT src="/modules/core/system.php?m='.$url.'"></SCRIPT>'.$nl;
         foreach ($this->components['css'] as $i){
-            $body.='<LINK rel="stylesheet" href="'.$i.'"/>'.$nl;
+            $body.= '<LINK rel="stylesheet" href="'.$i.'"/>'.$nl;
         }
         foreach ($this->components['js'] as $i){
-            $body.='<SCRIPT src="'.$i.'"></SCRIPT>'.$nl;
+            $body.= '<SCRIPT src="'.$i.'"></SCRIPT>'.$nl;
         }
-        $body.=     '<SCRIPT>'.$nl.
-                        'window.module = "'.$url.'"'.$nl.
-                        'window.user = '.json_encode($_SESSION['user']).$nl.
-                    '</SCRIPT>';
         $body .=
                 "</HEAD>".$nl.
                 "<BODY>".$nl.
@@ -46,11 +60,17 @@ class cirnoModuleRender extends CirnoAppBase{
         if ( $this->module['exists'] ){
             $this->loadModule( $this->module );
         } else {
-            $url = $this->defaultModule["url"];
-            $this->loadModule( $this->defaultModule );
+            $this->render404();
+            //This was causing bad files to ef up the session and confuse node.js.
+            /*$url = $this->defaultModule["url"];
+            $this->loadModule( $this->defaultModule );*/
         }
-
-        $this->render($url);
+        if ( $this->user->hasPermissions( $this->components['permissions'] ) ){
+            $this->render($url);
+        } else {
+            http_response_code(403);
+            echo "User does not have permission to access this page.";
+        }
     }
 
     /********************

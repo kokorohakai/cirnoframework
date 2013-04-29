@@ -6,33 +6,41 @@
 		8082: vlc 2
 */
 var cirno = {
-	io: require("socket.io").listen(8080),
+	io: require("socket.io").listen(8080,{ log: false }),
 	path: require('path'),
-	modules: require("./modules.js"),
-	session: require("./session.js")
+	session: require("./session.js"),
+	fs: require('fs')
 }
 
 function loadMessageHandler(){
 	cirno.messageHandler 		 	= require("./messageHandler.js");
 	cirno.messageHandler.cirno 		= cirno;
 	cirno.messageHandler.sockets 	= [];
+	cirno.session.cirno 			= cirno;
 	
 	for (var i in cirno.messageHandler.messages){
-		cirno.io.of(i).on("connection", function( socket ){
+		cirno.io.of(i).on("connection", function( socket, test ){
+			cirno.session.setupSocket( socket );
+
 			var module = cirno.messageHandler.messages[this.name];
 			cirno.messageHandler.sockets.push( socket );
 			for (var j in module){
 				socket.module = i;
 				socket.on( j, function( data ){
-					if ( cirno.modules.hasPermission( cirno.session.getUser( socket ) ) ){
+					if ( socket.allowed ) {
 						try{
-							module[j]( data, socket );
+							module[j]( data, this );
 						} catch(e) {
 							console.log(e);
 						}
 					}
 				});
 			}
+
+			socket.on("SETPHPSESSID",function( PHPSESSID ){
+				this.PHPSESSID = PHPSESSID;
+				cirno.session.getSession( this );
+			})
 		});
 	}
 

@@ -1,8 +1,14 @@
 enyo.kind({
     name:"Cirno.Com.Link",
-    classes: "toolbarLink",
+    classes: "cirnoLink",
     handlers: { onclick: "goLink" },
     goLink: function(){
-        window.location = this.url;
+    	this.setStyle("color:red");
+    	this.renderStyles();
+    	
+    	var self = this;
+        setTimeout(function(){
+        	window.location = self.url;
+        },16);
     }
 })

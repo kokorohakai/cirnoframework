@@ -11,11 +11,15 @@ class user {
     /******************
     * Private Methods
     ******************/
+    /******************
+    * Public Methods
+    ******************/
     public function setupSession(){
         session_start();
         if (!isset($_SESSION['user'])){
             $_SESSION['user'] = array(
-                "name" => "", //plain english name.
+                "first_name" => "",
+                "last_name" => "",
                 "username" => "",
                 "loggedIn" => false,
                 "permissions" => array()
@@ -27,9 +31,24 @@ class user {
         unset($return['permissions']);
         return $return;
     }
-    /******************
-    * Public Methods
-    ******************/
+    public function setUser( $data ){
+        $permsModel = new Model("user_permissions","id",array(
+            "permissions_id"=>array("permissions"=>"id")
+        ));
+        $permissions = array();
+        foreach( $permsModel->select("users_id",$data['id'] ) as $perm ){
+            $permissions[] = $perm['name'];
+        }
+        
+        $_SESSION['user'] = array(
+            "first_name" => $data["first_name"],
+            "last_name" => $data["last_name"],
+            "username" => $data["name"],
+            "loggedIn" => true,
+            "permissions" => $permissions
+        );
+        return true;
+    }
     public function logout(){
         unset($_SESSION['user']);
     }
@@ -37,7 +56,7 @@ class user {
     public function hasPermissions( $permissions ){
         $retval = false;
         foreach ($permissions as $perm){
-            foreach($this->permissions as $uperm){
+            foreach($_SESSION['user']['permissions'] as $uperm){
                 if ($uperm==$perm) $retval = true;
             }
         }

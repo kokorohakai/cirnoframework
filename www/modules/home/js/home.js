@@ -1,8 +1,8 @@
 enyo.kind({
-    name: "Cirno.Home",
-    components: (Cirno.mobile) ? [
-        {   kind: "Cirno.Com.Toolbar" }
-    ]:[
-        {   kind: "Cirno.Com.Toolbar" }
+    name: "Cirno.App.Home",
+    kind: enyo.Control,
+    layoutKind: "FittableRowsLayout",
+    components: [
+        (Cirno.Sys.user.isLoggedIn()) ? {kind: "Cirno.App.Home.Welcome"} : {kind:"Cirno.App.Home.Login"}
     ]
 })

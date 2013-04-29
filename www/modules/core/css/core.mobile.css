@@ -75,7 +75,7 @@ div.onyx-toolbar-inline div {
     float:left;
 }
 
-div.toolbarLink {
+div.cirnoLink {
     text-align:left;
     margin-left:30px;
     margin-right:30px;
@@ -84,7 +84,7 @@ div.toolbarLink {
     height:25px;
     cursor:pointer;
 }
-div.toolbarLink:hover{
+div.cirnoLink:hover{
     color:#DDF;
 }
 
@@ -101,4 +101,6 @@ div.toolbarLink:hover{
     border-right:1px solid #ABE;
     border-radius: 0px 0px 20px 20px;
     background:#333;
+    position:absolute;
+    z-index:9000;
 }

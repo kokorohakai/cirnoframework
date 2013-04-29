@@ -1,6 +1,36 @@
-this.getUser = function( socket ){
-    //socket.sessionID (This is added by the login manager.)
-    return {}
+var self = this;
+this.setupSocket = function( socket ){
+	  socket.allowed = false;
 }
-//I'm thinking the socket can come in with the PHP SessionID and then access that file from PHP
-//directly for its data.
+
+this.getSession = function( socket ){
+	var fileName = "/var/php_session/sess_"+socket.PHPSESSID+"_js";
+    self.cirno.fs.readFile(fileName,'utf8',function(err, data){
+
+        var session = JSON.parse(data);
+      
+        socket.session = session;
+
+        if (session && session.user && session.user.loggedIn ){
+            var userPerms = session.user.permissions;
+            var modulePerms = session.module.permissions;
+            userPerms = (userPerms instanceof Array) ? userPerms : [];
+            modulePerms = (modulePerms instanceof Array) ? modulePerms : [];
+
+            var allowed = false;
+
+            //var modulePerms = session.module.
+            for (var i = 0, ilen = userPerms.length; i < ilen; i++ ){
+                for ( var j = 0, jlen = modulePerms.length; j < jlen; j++ ) {
+                    if ( userPerms[i] == modulePerms[j] ){
+                        allowed = true;
+                    }
+                }
+            }
+
+            if ( modulePerms.length == 0 ) allowed = true;
+            
+            socket.allowed = allowed;
+        }
+    });
+}

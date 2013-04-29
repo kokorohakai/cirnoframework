@@ -1,0 +1,15 @@
+#cirnoApp_home_login table{
+	display:inline-block;
+}
+.welcome_message{
+    border:0px;   
+    width:980px;
+    height:450px;
+    overflow:hidden;
+}
+
+.login_message{
+	border:0px;
+	width:600px;
+	height:400px;
+}
