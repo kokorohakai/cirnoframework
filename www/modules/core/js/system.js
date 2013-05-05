@@ -78,3 +78,94 @@ Cirno.cookies = (function(){
     }
     return output;
 })();
+
+Object.defineProperty( String.prototype, "replaceAll", {
+    enumberable: false,
+    writable: false,
+    configurable: false,
+    value: function( search, replace ){
+        var output = this;
+        if ( typeof(search) == "string" && typeof(replace) == "string" ) {
+            output = this.split(search).join(replace);
+        }
+        return output;
+    }
+})
+
+Object.defineProperty( String.prototype, "pad", {
+    enumberable: false,
+    writable: false,
+    configurable: false,
+    value: function( character, length, rightSide ){
+        var output = this;
+        var pad = "";
+        var len = this.length;
+        if ( len < length ){
+            for ( var i = 0; i < length-len; i++){
+                pad+=character;
+            }
+        }
+        if ( rightSide ){
+            output = this+pad;
+        } else {
+            output = pad+this;
+        }
+        return output;
+    }
+})
+
+Object.defineProperty( Object.prototype, "extend", {
+    enumerable: false,
+    writable: true,
+    configurable: false,
+    value: function( obj ){
+        if (typeof(obj) == "object"){
+            for ( i in obj){
+                this[i] = obj[i];
+            }
+        } else {
+            console.log("Object.extend :: Invalid object supplied");
+        }
+        return this;
+    }
+});
+
+if ( window.console && navigator.userAgent.lastIndexOf("Android") > -1){
+    document.write('<div id="CIRNO_SYSTEM_DEBUG_WINDOW" class="hidden"></div>');
+    window.console.log = function(){
+        var output = "";
+        var date = new Date();
+        for( var i = 0, len = arguments.length; i < len; i++ ){
+            if ( typeof(arguments[i]) == "undefined" ){
+                output += " <s>undefined</s>";
+            } else if ( typeof( arguments[i] ) == "object" && arguments[i] instanceof Object ){
+                var str = "";
+                try {
+                    str = JSON.stringify( arguments[i] );
+                } catch( e ) {
+                    str = "[Object object]";
+                }
+                output+= " " + str;
+            } else if ( typeof( arguments[i] ) == "object" && arguments[i] instanceof Array ){
+                var str = "";
+                try {
+                    str = JSON.stringify( arguments[i] );
+                } catch( e ) {
+                    str = "[Array object]";
+                }
+                output += " " + str;
+            } else {
+                output += " " + arguments[i].toString();
+            }
+        }
+
+        var debug = document.getElementById("CIRNO_SYSTEM_DEBUG_WINDOW");
+        var html = debug.innerHTML;
+        html += "<i>" + date.toString() + "</i>: " + output + "<br>";
+        debug.innerHTML = html;
+        debug.className="";
+    }
+    window.onerror = function( e ){
+        console.log(e);
+    } 
+}

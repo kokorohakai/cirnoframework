@@ -2,7 +2,7 @@
 class ChatModule extends Module{
     public $js = array(
         //libraries
-        "Chat.js",
+        "chat.js",
         "../css/package.js"
     );
     public $footjs = array(
@@ -14,7 +14,10 @@ class ChatModule extends Module{
     public $depends = array(
         
     );
-
+    
+    public $permissions = array(
+        "user"
+    );
     public function __construct( &$renderer, &$meta ){
         parent::__construct(func_get_args()); 
     }

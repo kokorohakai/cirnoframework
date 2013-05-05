@@ -15,12 +15,15 @@ class user {
     * Public Methods
     ******************/
     public function setupSession(){
+        ini_set("session.cookie_lifetime","28800");
+        ini_set('session.gc_maxlifetime', '28800');
         session_start();
         if (!isset($_SESSION['user'])){
             $_SESSION['user'] = array(
                 "first_name" => "",
                 "last_name" => "",
                 "username" => "",
+                "user_id" => "",
                 "loggedIn" => false,
                 "permissions" => array()
             );
@@ -44,6 +47,7 @@ class user {
             "first_name" => $data["first_name"],
             "last_name" => $data["last_name"],
             "username" => $data["name"],
+            "user_id" => $data["id"],
             "loggedIn" => true,
             "permissions" => $permissions
         );

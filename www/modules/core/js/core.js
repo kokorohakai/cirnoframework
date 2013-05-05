@@ -20,6 +20,8 @@ enyo.kind({
     codeName: "baka",
     content: "Access Denied",
     classes: [(Cirno.Sys.mobile)?"mobile":"nonmobile"],
+    handlers: { onresize: "resizeEvent" },
+    style: "height:"+parseInt(window.innerHeight)+"px",
     constructor: function( ){
         this.inherited(arguments);
         
@@ -62,5 +64,8 @@ enyo.kind({
         {   kind: "Cirno.Com.Toolbar" },
         {   kind: "Cirno.Com.Messaging", ischrome: true},
         {   kind: "Cirno.Com.LoginManager", ischrome: true}
-    ]
+    ],
+    resizeEvent: function(){
+        this.setStyle("height:"+parseInt(window.innerHeight)+"px");
+    }
 });

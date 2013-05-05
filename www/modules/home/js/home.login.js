@@ -22,7 +22,7 @@ enyo.kind({
                 ]},
                 {   tag: "tr", components:[
                     {   tag: "td", components:[
-                        {   kind: "Cirno.Com.Form.Button", name: "login", content: "Login / Register", handlers: { ontap: "login"},
+                        {   kind: "Cirno.Com.Form.Button", name: "login", content: "Login / Register", handlers: { ontap: "login" },
                             login: function( sender, event ){
                                 cirno.$.loginManager.login(this.owner.$['username'].getValue(), this.owner.$['password'].getValue());
                             }

@@ -6,8 +6,11 @@ this.setupSocket = function( socket ){
 this.getSession = function( socket ){
 	var fileName = "/var/php_session/sess_"+socket.PHPSESSID+"_js";
     self.cirno.fs.readFile(fileName,'utf8',function(err, data){
-
-        var session = JSON.parse(data);
+        var session = {};
+        
+        try{
+            session = JSON.parse(data);
+        } catch(e){}
       
         socket.session = session;
 

@@ -1,0 +1,97 @@
+.cirnoToolbar{
+	margin: 0px;
+}
+/* layout */
+.layoutTable {
+    height:100%;
+    width:100%;
+}
+/*The chat toolbar*/
+.chatToolbar {
+	border-bottom: 3px solid #678;
+	width:100%;
+}
+.chatToolbar td{
+	font-weight: bold;
+    width:100%;
+    padding-left:15%;
+}
+.chatToolbar td.welcome{
+    padding:10px;
+    text-align:center;
+    width:100%;
+    color:#DDF;
+}
+.chatToolbar input, .chatToolbar textarea{
+    width:70%;
+}
+.chatToolbar td.grouping{
+    text-align:left;
+}
+.layoutTable {
+    width:100%;
+}
+.chatToolbarContainer{
+    background-image: url("/modules/core/img/bg1.png");
+    background-repeat: repeat-x;
+    width:100%;
+}
+.chatToolbar {
+    width:100%;
+}
+
+.chatToolbar table{
+    width:100%;
+}
+.chatToolbar td.message{
+}
+
+/*The text area*/
+td.chatWindow{
+    height:100%;
+}
+td.chatWindow div.chatWindowInner{
+    height:100%;
+}
+td.chatWindow .mascot{
+    position:absolute;
+    z-index:10;
+    right:30px;
+}
+td.chatWindow .chatList{
+    position:absolute;
+    z-index:20;
+    height:100%;
+    width:100%;
+}
+td.chatWindow .chatRow td{
+    display: block;
+}
+td.chatWindow .chatRow td.info{
+    overflow:hidden;
+    white-space:nowrap;
+    vertical-align:bottom;
+}
+td.chatWindow .chatRow td.info div{
+    display:inline;
+}
+td.chatWindow .chatRow td.info div.user{
+    font-weight:bold;
+}
+td.chatWindow .chatRow td.info div.time{
+    font-style:italic;
+    font-size:11px;
+    line-height:30px;
+}
+td.chatWindow .chatRow td.bubbleMessage {
+    overflow:hidden;
+    white-space:normal;
+}
+td.chatWindow .chatRow td.bubbleMessage div.message{
+    padding:5px;
+    border:2px solid #224;
+    border-radius: 10px;
+    background:#557;
+    width:auto;
+    display:inline-block;
+}

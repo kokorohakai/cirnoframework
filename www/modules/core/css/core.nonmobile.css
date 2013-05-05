@@ -13,8 +13,29 @@ html,body,div,span,table,td,img {
 html,body{
     background:black;
 }
+
+#CIRNO_SYSTEM_DEBUG_WINDOW{
+    position: absolute;
+    z-index: 9000;
+    bottom: 0px;
+    height: 100px;
+    width: 100%;
+    overflow-y: auto;
+    background: #EEE;
+    border:1px solid #666;
+    color: black;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 3px;
+}
+#CIRNO_SYSTEM_DEBUG_WINDOW i{
+    color: #999;
+}
+#CIRNO_SYSTEM_DEBUG_WINDOW.hidden{
+    display: none;
+}
 /* Both Layouts */
-input, textarea, select, button, span.button{
+input, textarea, select, button, div.button{
     border-left:2px solid #66A;
     border-top:2px solid #66A;
     border-bottom:2px solid #88A;
@@ -26,7 +47,7 @@ input, textarea, select, button, span.button{
     padding:2px;
 }
 
-span.button{
+div.button{
     background-image:url('http://cirno/modules/core/js/onyx/images/gradient.png');
     background-color:#EEF;
     cursor:pointer;
@@ -34,9 +55,15 @@ span.button{
     border-radius:7px;
     padding: 3px;    
     font-weight:bold;
+    display:inline-block;
+    white-space:pre;
 }
 
-span.button:hover{
+div.button.active{
+    background-color:#FDD;
+}
+
+div.button:hover{
     background-color:#FFF;
 }
 

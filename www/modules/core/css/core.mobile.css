@@ -14,7 +14,14 @@ html,body{
     background:black;
 }
 
-input, textarea, select, button, span.button{
+#CIRNO_SYSTEM_DEBUG_WINDOW{
+    font-size:10px;
+    font-family:system;
+}
+#CIRNO_SYSTEM_DEBUG_WINDOW.hidden{
+    display: none;
+}
+input, textarea, select, button, div.button{
     border-left:2px solid #66A;
     border-top:2px solid #66A;
     border-bottom:2px solid #88A;
@@ -25,19 +32,22 @@ input, textarea, select, button, span.button{
     padding:5px;    
     font-size:20px;
 }
+div.button.active{
+    background-color:#FDD;
+}
 
-span.button{
+div.button{
     background-image:url('http://cirno/modules/core/js/onyx/images/gradient.png');
     background-size:50px 50px;
     background-color:#EEF;
     border-width: 2px;
     cursor:pointer;
-    line-height:50px;
+    line-height:20px;
     border-radius:15px;
     padding:10px;
 }
 
-span.button:hover{
+div.button:hover{
     background-color:#FFF;
 }
 

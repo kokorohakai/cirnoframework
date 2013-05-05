@@ -5,5 +5,5 @@ enyo.kind({
 enyo.kind({
     name: "Cirno.Com.Form.Button",
     classes: "button",
-    tag: "span"
+    tag: "div"
 })
