@@ -75,9 +75,10 @@ function Model( table, key, joins ) {
         //pre building most of the query needed for each method.
         sqlParams["get"]     = "SELECT * FROM `"+sqlParams['table']+"` "+sqlParams['joins']+sqlParams['where'];
         sqlParams["select"]  = "SELECT * FROM `"+sqlParams['table']+"` "+sqlParams['joins'];
+        sqlParams["count"]   = "SELECT COUNT(*) AS count FROM `"+sqlParams['table']+"` "+sqlParams['joins'];
         sqlParams["delete"]  = "DELETE FROM `"+sqlParams['table']+"` WHERE `"+pkey+"`=";
-        sqlParams["insert"]  = "INSERT INTO `"+sqlParams['table']+"` SET";
-        sqlParams["update"]  = "UPDATE `"+sqlParams['table']+"` SET";
+        sqlParams["insert"]  = "INSERT INTO `"+sqlParams['table']+"` SET ";
+        sqlParams["update"]  = "UPDATE `"+sqlParams['table']+"` SET ";
         pkey = key;
     }
     /*****************
@@ -88,30 +89,57 @@ function Model( table, key, joins ) {
         var sql = sqlParams["get"] + "'" + id + "'";
         connection.query( { sql: sql, nestTables: '_' }, cb );
     }
-    this.select = function( cb, key, value, sortBy, sortOrd, limit, startat ){
+    this.select = function( cb, values, sortBy, sortOrd, limit, startat, count ){
         if (!startat) startat = 0;
         if (!limit) limit = 100;
         if (!sortOrd) sortOrd = 'DESC';
         if (!sortBy) sortBy = '1';
-        if (!value) value = false;
+        if (!values) values = false;
+        if (!count) count = false;
         key = (!key) ? false : key.toString();
         if (isNaN(parseInt(sortBy))){
             sortBy = "`"+sqlParams['table']+"`.`"+sortBy+"`";
         }
+        var preSql = (count) ? sqlParams['count'] : sqlParams['select'];
         var postSql = "ORDER BY "+sortBy+" "+sortOrd+" LIMIT "+startat+","+limit;
         var sql = "";
-        if (value){
-            value = value.replaceAll("'","''");
-            if (!key){
-                key = pkey;
+        if (typeof(values) == "object" && !(values instanceof Array)){
+            var where = "";
+            for ( var i in values ) {
+                value = values[i].toString().replaceAll("'","''");
+                where += (where.length > 0) ? " AND " : "";
+                where += "`" + sqlParams['table'] + "`.`" + i + "` = '" + value + "'";
             }
-            if (key){
-                sql = sqlParams['select']+" WHERE `"+sqlParams['table']+"`.`"+key+"` = '"+value+"' "+postSql;
-            } else {
-                return {};
-            }
+            sql = preSql + " WHERE " + where + " " + postSql;            
         } else {
-            sql = sqlParams['select']+" "+postSql;
+            sql = preSql + " " + postSql;
+        }
+        connection.query( { sql: sql, nestTables: '_' }, cb );
+    }
+    this.search = function( cb, values, sortBy, sortOrd, limit, startat, count ){
+        if (!startat) startat = 0;
+        if (!limit) limit = 100;
+        if (!sortOrd) sortOrd = 'DESC';
+        if (!sortBy) sortBy = '1';
+        if (!values) values = false;
+        if (!count) count = false
+        key = (!key) ? false : key.toString();
+        if (isNaN(parseInt(sortBy))){
+            sortBy = "`"+sqlParams['table']+"`.`"+sortBy+"`";
+        }
+        var preSql = (count) ? sqlParams['count'] : sqlParams['select'];
+        var postSql = "ORDER BY "+sortBy+" "+sortOrd+" LIMIT "+startat+","+limit;
+        var sql = "";
+        if (typeof(values) == "object" && !(values instanceof Array)){
+            var where = "";
+            for ( var i in values ) {
+                value = values[i].toString().replaceAll("'","''");
+                where += (where.length > 0) ? " AND " : "";
+                where += "`" + sqlParams['table'] + "`.`" + i + "` LIKE '" + value + "'";
+            }
+            sql = preSql + " WHERE " + where + " " + postSql;            
+        } else {
+            sql = preSql + " " + postSql;
         }
         connection.query( { sql: sql, nestTables: '_' }, cb );
     }
@@ -120,17 +148,31 @@ function Model( table, key, joins ) {
         sql = sqlParams["delete"] + "'"+id+"'";
         connection.query( { sql: sql, nestTables: '_' }, cb );
     }
-    this.update = function( cb, id, values){
+    this.deleteKey = function( cb, key, id ){
         id = id.toString().replaceAll("'","''");
+        sql = "DELETE FROM "+sqlParams["table"] + " WHERE `"+key+"` = '"+id+"'";
+        connection.query( { sql: sql, nestTables: '_' }, cb );
+    }
+    this.update = function( cb, id, values){
         valueStr = getValueStr(values);
-
-        sql = sqlParams['update']+valueStr+" WHERE `"+pkey+"`='"+id+"'";
+        if ( id ) {
+            id = id.toString().replaceAll("'","''");
+            sql = sqlParams['update']+valueStr+" WHERE `"+pkey+"`='"+id+"'";
+        } else {
+            sql = sqlParams['update']+valueStr;
+        }
         connection.query( { sql: sql, nestTables: '_' }, cb );
     }
     this.insert = function( cb, values ){
         valueStr = getValueStr(values);
 
         sql = sqlParams['insert']+valueStr;
+        connection.query( { sql: sql, nestTables: '_' }, cb );
+    }
+    this.updateOrInsert = function( cb, values ){
+        valueStr = getValueStr(values);
+
+        sql = sqlParams['insert']+valueStr+" ON DUPLICATE KEY UPDATE `"+pkey+"`='"+values[pkey].toString().replaceAll("'","''")+"'";
         connection.query( { sql: sql, nestTables: '_' }, cb );
     }
     //note the return from this is really nice. Contains lots of info, such as "insertId", which is the id of the data just inserted.

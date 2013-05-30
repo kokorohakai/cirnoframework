@@ -23,6 +23,10 @@ enyo.kind({
     handlers: { onresize: "resizeEvent" },
     style: "height:"+parseInt(window.innerHeight)+"px",
     constructor: function( ){
+        document.onscroll = enyo.dispatch;
+        window.onscroll = function(e){
+            enyo.Signals.send( "onWindowScroll", e);
+        }
         this.inherited(arguments);
         
         function createModule( data ){

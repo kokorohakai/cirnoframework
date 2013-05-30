@@ -1,5 +1,5 @@
 enyo.depends(
     (Cirno.Sys.mobile) ? 
-    "Browse.mobile.css" : 
-    "Browse.normal.css"
-)
+    "browse.mobile.css" : 
+    "browse.normal.css"
+);

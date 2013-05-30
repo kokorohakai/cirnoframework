@@ -1,8 +1,9 @@
 Cirno.MenuItems = [
     { kind:"Cirno.Com.Link", url:"/home",   content: (Cirno.Sys.user.isLoggedIn()) ? "Home" : "Home / Login" },
     (Cirno.Sys.mobile) ? { kind:"Cirno.Com.Link", url:"/home/instructions",   content: "Instructions" } : {},
-    { kind:"Cirno.Com.Link", url:"/browse", content: "Browse Songs" },
-    (Cirno.Sys.user.hasPermission("user")) ? { kind:"Cirno.Com.Link", url:"/sing",   content: "Sing" } : {},
+    (Cirno.Sys.user.isLoggedIn()) ? { kind:"Cirno.Com.Link", url:"/browse", content: "Browse / Sing Songs" } :
+        { kind:"Cirno.Com.Link", url:"/browse", content: "Browse Songs" },
+    (Cirno.Sys.user.hasPermission("user")) ? { kind:"Cirno.Com.Link", url:"/queue",   content: "Singer Queue" } : {},
     (Cirno.Sys.user.hasPermission("user")) ? { kind:"Cirno.Com.Link", url:"/chat",   content: "Chat" } : {},
     (Cirno.Sys.user.hasPermission("dj")) ? { kind:"Cirno.Com.Link", url:"/dj",     content: "DJ Player" } : {},
     (Cirno.Sys.user.hasPermission("admin")) ? { kind:"Cirno.Com.Link", url:"/admin",  content: "Admin Panel" } : {},

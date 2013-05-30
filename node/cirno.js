@@ -6,13 +6,15 @@
 		8082: vlc 2
 */
 require("./system.js");
-var cirno = {
-	io: 		require("socket.io").listen(8080,{ log: false }),
-	path: 		require('path'),
-	session: 	require("./session.js"),
-	fs: 		require('fs'),
-	db: 		require("./db.js")
-}
+//do not var cirno, it needs to be global.
+cirno= 					{};
+cirno.fs= 				require('fs'),
+cirno.path= 			require('path'),
+cirno.io= 				require("socket.io").listen(8080,{ log: false }),
+cirno.session= 			require("./session.js"),
+cirno.db= 				require("./db.js"),
+cirno.karaokeLibrary= 	require("./karaokeLibrary.js")
+
 
 function loadMessageHandler(){
 	function configureListener( socket, module, j ){
@@ -29,9 +31,7 @@ function loadMessageHandler(){
 	}
 
 	cirno.messageHandler 		 	= require("./messageHandler.js");
-	cirno.messageHandler.cirno 		= cirno;
 	cirno.messageHandler.sockets 	= [];
-	cirno.session.cirno 			= cirno;
 
 	//rebuild the models after updating the message handler.
 	var models = require("./models.js");
@@ -40,7 +40,6 @@ function loadMessageHandler(){
 	
 	for (var i in cirno.messageHandler.messages){
 		cirno.io.of(i).on("connection", function( socket, test ){
-			console.log("A wild pokemon has appeared!");
 			cirno.session.setupSocket( socket );
 
 			var module = cirno.messageHandler.messages[this.name];
@@ -79,9 +78,10 @@ function stopMessageHandler(){
 }
 
 loadMessageHandler();
+cirno.karaokeLibrary.start();
 
 process.on("SIGHUP", function(){
-	nukeMessageHandler();
+	stopMessageHandler();
 	loadMessageHandler();
 })
 

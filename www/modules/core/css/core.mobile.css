@@ -50,6 +50,13 @@ div.button{
 div.button:hover{
     background-color:#FFF;
 }
+div.button.mousedown{
+    background-color: #FFF 2px solid;
+    border-left: #CCF 2px solid;
+    border-top: #CCF 2px solid;
+    border-bottom: #DDF 2px solid;
+    border-right: #DDF 2px solid;
+}
 
 #cirnoApp{
     text-align:center;

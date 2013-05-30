@@ -12,5 +12,6 @@ this.build = function( cirno ){
             "users" : "id"
         }  
     });
+    cirno.db.createModel('karaokeLibrary','karaoke_library','file_name');
 
 }

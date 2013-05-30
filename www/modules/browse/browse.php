@@ -16,7 +16,7 @@ class BrowseModule extends Module{
     );
     
     public $permissions = array(
-        "user"
+        
     );
     public function __construct( &$renderer, &$meta ){
         parent::__construct(func_get_args()); 
