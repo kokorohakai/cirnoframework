@@ -1,10 +1,8 @@
 <?php
+require("credentials.php");
 class Model{
-    private $username 	= "cirno";
-    private $password 	= "cirn0!isstr0ng3st*";
-    private $database 	= "cirno";
-    private $host 		= "localhost";
     //private $port 		= ""; //???
+    private $credentials = new Credentials();
     private $connection = null;
 
     private $sql		= array(
@@ -12,10 +10,9 @@ class Model{
     						"joins"=>"",
     						"where"=>""
     					  );
-
     private function connect(){
     	try {
-		    $this->connection = new PDO('mysql:host='.$this->host.';dbname='.$this->database, $this->username, $this->password);
+		    $this->connection = new PDO('mysql:host='.$this->credentials->host.';dbname='.$this->credentials->database, $this->credentials->username, $this->credentials->password);
 		} catch (PDOException $e) {
 			http_response_code(503);
 		    echo json_encode(array("error"=>"Error!: " . $e->getMessage()));

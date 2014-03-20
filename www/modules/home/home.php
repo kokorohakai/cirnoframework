@@ -17,7 +17,7 @@ class HomeModule extends Module{
         
     );
 
-    public $title = "⑨ Karaoke Machine: The Strongest Karaoke Machine Login.";
+    public $title = "⑨ Cirno Framework";
     
     public function __construct( &$renderer, &$meta ){
         parent::__construct(func_get_args());
