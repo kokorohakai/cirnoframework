@@ -7,11 +7,11 @@ this.build = function( cirno ){
     * With a create once and persisting environment. Plus the active state
     * of the server will allow it to pull and deliver this data much faster.
     ***************************************************************************/
+    /* E.G:
     cirno.db.createModel('chat', 'chat', 'id', {
         "user_id": {
             "users" : "id"
         }  
     });
-    cirno.db.createModel('karaokeLibrary','karaoke_library','file_name');
-
+    */
 }

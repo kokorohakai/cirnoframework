@@ -12,8 +12,7 @@ cirno.fs= 				require('fs'),
 cirno.path= 			require('path'),
 cirno.io= 				require("socket.io").listen(8080,{ log: false }),
 cirno.session= 			require("./session.js"),
-cirno.db= 				require("./db.js"),
-cirno.karaokeLibrary= 	require("./karaokeLibrary.js")
+cirno.db= 				require("./db.js");
 
 
 function loadMessageHandler(){
@@ -78,7 +77,6 @@ function stopMessageHandler(){
 }
 
 loadMessageHandler();
-cirno.karaokeLibrary.start();
 
 process.on("SIGHUP", function(){
 	stopMessageHandler();
